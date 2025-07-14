@@ -2,34 +2,35 @@ const db01 = require('../models/store');
 const { gsc, ivu, ivic } = require('../utils/helpers');
 const mom = require('moment');
 
-// POST /shorturls
+
+
+
+
 async function csu01(req, res) {
   const { url, validity: vey = 30, shortcode: csc12 } = req.body;
-
   if (!url || !ivu(url)) {
     return res.status(400).json({ error: 'Invalid or missing URL.' });
   }
-
   let sc = csc12 || gsc();
 
+  
   if (!ivic(sc)) {
     return res.status(400).json({ error: 'Invalid shortcode format.' });
   }
+  
 
   if (db01.shortcodes[sc]) {
     return res.status(409).json({ error: 'Shortcode already exists.' });
   }
-
   const cat = mom();
   const exp12 = mom(cat).add(vey, 'minutes');
-
   db01.shortcodes[sc] = {
     originalUrl: url,
     expiry: exp12.toISOString(),
     createdAt: cat.toISOString(),
     clicks: [],
   };
-
+  
   res.status(201).json({
     shortLink: `http://localhost:3000/${sc}`,
     expiry: exp12.toISOString(),
