@@ -1,5 +1,5 @@
 const db01 = {
-  shortcodes: {}, // e.g., abcd1: { originalUrl, expiry, createdAt, clicks: [] }
+  shortcodes: {}, 
 };
 
 module.exports = db01;
